@@ -13,4 +13,4 @@ Most of the home lab work I do is done using a Dell T7810 workstation with dual 
 Note: As I complete lab projects and convert existing projects into a format appropriate for this repo, I will update the table of contents, though I may not always list projects in alphabetic order. I will probably organize them topically or by technology as the list grows.
 
 ### Small-medium Office Networks:
-- [OpenVPN with RADIUS Authentication](<projects/OpenVPN with RADIUS Authentication/OpenVPN with RADIUS Authentication.md>)
+- [OpenVPN with RADIUS Authentication](<projects/openvpn-radius-authentication/openvpn-radius-authentication.md>)
