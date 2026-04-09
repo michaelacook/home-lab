@@ -1,5 +1,3 @@
-# About
-
 This repository centralizes my scripts and infrastructure home lab projects for reference and as a record of my progress as an IT professional. I maintain an extensive Obsidian collection of technical notes, and hope to use this repository as an extension of my note collection but tailored specifically to act as a showcase for the project work I found most challenging and gratifying. I also hope that these projects will serve as inspiration for other early-career IT pros to get their hands dirty. If you replicate one of my projects yourself, I would love to hear about your work!
 
 Most of the projects you will find in this collection are related to enterprise networking and server role deployments. However, in the future I hope to share some work related to self-hosting.
