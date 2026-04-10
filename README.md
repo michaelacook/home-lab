@@ -12,3 +12,4 @@ Note: As I complete lab projects and convert existing projects into a format app
 
 ### Small-medium Business Networks:
 - [OpenVPN with RADIUS Authentication](<projects/openvpn-radius-authentication/openvpn-radius-authentication.md>)
+- [OpenVPN with Radius Authentication - Split Tunneling](<projects/openvpn-radius-authentication-split-tunnel/openvpn-radius-auth-split-tunnel.md/>)
