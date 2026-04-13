@@ -10,6 +10,9 @@ Most of the home lab work I do is done using a Dell T7810 workstation with dual 
 
 Note: As I complete lab projects and convert existing projects into a format appropriate for this repo, I will update the table of contents, though I may not always list projects in alphabetic order. I will probably organize them topically or by technology as the list grows.
 
+### Active Directory
+- [Configuring an Active Directory Forest Trust](<projects/active-directory-forest-trust/>)
+
 ### Small-medium Business Networks:
 - [OpenVPN with RADIUS Authentication](<projects/openvpn-radius-authentication/openvpn-radius-authentication.md>)
 - [OpenVPN with Radius Authentication - Split Tunneling](<projects/openvpn-radius-authentication-split-tunnel/openvpn-radius-auth-split-tunnel.md/>)
