@@ -39,11 +39,16 @@ The following tables shows all networks configured on both routers
 
 ## Initial Server Configuration
 
+Initial server configuration involved ensuring correct time configuration, running all updates, configuring hostnames and static IP addresses, then installing Active Directory Domain Services on each server.
+
 ## Active Directory Configuration
 
 I installed Active Directory Domain Services on each Windows Server, and created a new forest domain and promoted each to domain controller. In the 10.0.1.0/24 subnet I created the `ad.cooklab.com` domain and in the 10.0.2.0/24 subnet I created the `corp.mikelab.com` domain.
 
+#### `DC1.ad.cooklab.com` Server Manager
 ![DC1.ad.cooklab.com](<images/dc1-cooklab-server-manager.png>)
+
+#### `DC01.ad.mikelab.com` Server Manager
 ![DC01.corp.mikelab.com](<images/dc01-mikelab-server-manager.png>)
 
 ### DNS
@@ -55,10 +60,10 @@ Importantly, a prerequisite for configuring a two-way forest trust is two-way na
 <!-- ![DC1.ad.cooklab.com DNS Forwarder](<images/dc1-cooklab-dns-forwarder.png>) -->
 <!-- ![DC01.corp.mikelab.com DNS Forwarder](<images/dc01-mikelab-dns-forwarder.png>) -->
 
-Conditional forwarder for `corp.mikelab.com` on DC1
+#### Conditional forwarder for `corp.mikelab.com` on DC1
 ![Conditional forwarder for corp.mikelab.com on DC1](<images/dc1-cooklab-conditional-forwarder.png>)
 
-Conditional forwarder for `ad.cooklab.com` on DC01
+#### Conditional forwarder for `ad.cooklab.com` on DC01
 ![Conditional forwarder for ad.cooklab.com on DC01](<images/dc01-mikelab-conditional-forwarder.png>)
 
 ## Configuring the Forest Trust
@@ -83,7 +88,15 @@ The trust relationship was configured successfully and appears in AD Domains and
 
 ## Testing the Forest Trust
 
-I wanted to ensure that users in each forest can be added to groups on both side of the trust relationship. First, I added the following users:
+I wanted to test the health of the trust and ensure that users in each forest can be added to groups on both side of the trust relationship. First, I tested the trust on both sides with `nltest`:
+
+#### `dc1.ad.cooklab.com`
+![nltest on DC1.ad.cooklab.com](<images/nltest-dc1.png>)
+
+#### `dc01.corp.mikelab.com`
+![nltest on DC01.corp.mikelab.com](<images/dc01-nltest.png>)
+
+Next, I added the following users:
 
 |Display Name|UPN|
 |-|-|
@@ -112,4 +125,14 @@ I previously configured conditional forwarders for name resolution between the t
 
 ## Mistakes and Lessons Learned
 
+I made a few mistakes along the way with this project and had to partially rebuild a couple times.
+
+First lesson: **NetBIOS names must be unique**. When I first set out to begin this project, I initially created both forests as a subdomain of `ad.`. Thus the fully qualified domain names for each were `ad.cooklab.com` and `ad.mikelab.com` and this prevented me from proceeding through the new trust wizard. My research found that the NetBIOS name of each domain or forest must be unique. With both forests being subdomains of `ad.`, both would have the NetBIOS name AD. 
+
+Second lesson: **Hostnames must be unique**. When I first promoted my domain controllers, I gave them each the hostname of `DC1`. This resulted in the error `ERROR_NO_LOGON_SERVERS` after creating the trust. My research suggested that hostname conflicts will cause issues with authentication. I changed the hostname of `DC1.corp.mikelab.com` to `DC01.corp.mikelab.com` and this resolved the error.
+
+The issue of overlapping NetBIOS names made sense to me, but I was confused by the issue related to hostnames. I would have that that as long as the FQDN is unique, authentication could proceed. In practice this would rarely be an issue, as hosts are typically named by combination of location, service, etc. Were I do re-build this project I would probably name one host `LON-DC1.ad.cooklab.com` and the other `TO-DC1.corp.mikelab.com`
+
 ## Conclusion
+
+In this article I outlined the steps I took to configure a two-way Active Directory forest trust. Forest trusts are some times done to support mergers or acquisitions, but complex Active Directory topologies are less necessary today with the use of technologies like SharePoint Online and other cloud technologies that allow easy resource sharing without WAN connections, VPNs or trusts. Nevertheless, because this technology may continue to be used for some time in the enterprise, it was a worthwhile exercise and taught me more about authentication and the subtlte differences between types of security groups.
