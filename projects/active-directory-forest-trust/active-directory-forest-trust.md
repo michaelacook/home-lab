@@ -83,8 +83,8 @@ You then proceed through the wizard, which involves specifying the forest or dom
 
 The trust relationship was configured successfully and appears in AD Domains and Trusts on both `DC1.ad.cooklab.com` and `DC01.corp.mikelab.com`.
 
-![New Trust Wizard](<images/ad-forest-trust-dc1-complete.PNG>)
-![New Trust Wizard](<images/ad-forest-trust-dc01-complete.PNG>)
+![New Trust Wizard](<images/ad-forest-trust-dc1-complete.png>)
+![New Trust Wizard](<images/ad-forest-trust-dc01-complete.png>)
 
 ## Testing the Forest Trust
 
