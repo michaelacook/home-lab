@@ -119,17 +119,29 @@ I was then able to add David Boggs and Donald Davies to the **Toronto Users - Ex
 
 The reason domain-local groups were used is that as per [Microsoft's documentation](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#how-active-directory-security-groups-work), domain-local groups are the only group type that allows the addition of users and groups from trusted external domains. Domain-local groups are typically granted permissions directly on resources (only in the domain they are created), and users or groups from any domain in the forest or trusted domain may be added as members. From here, these groups could be granted permissions, allowing cross-organizational file and resource sharing.
 
-## Configuring a Stub DNS Zone
+## Configuring a DNS Stub Zone
 
-I previously configured conditional forwarders for name resolution between the two forest root domains. Stub zones are a more maintainable approach, allowing for dynamic update of DNS records.
+I previously configured conditional forwarders for name resolution between the two forest root domains. I decided to replace these with stub zones, as this is a more maintainable solution. A [stub zone](https://learn.microsoft.com/en-us/windows-server/networking/dns/zone-types#stub-zone) is a read-only zone that stores just the Start of Authority, Name Server and any necessary A records to resolve the trusted or child domain. The stub zone is periodically updated by querying the authoritative name server it points to and means that if the IP of one of the name servers were to change, admins on the other side of the trust wouldn't need to make any manual changes.
 
-## Mistakes and Lessons Learned
+ Creating a stub zone is straight forward and involves opening the DNS manager and launching the New Zone Wizard by right-clicking the server and following the prompts to select the creation of a stub, select whether to store the zone in Active Directory and how to replicate the zone, whether the zone is forward or reverse lookup, the zone name and the IP of it's authoritative name server. For this lab I selected all defaults to store the server in Active Directory and replicate to all domain controllers.
+
+After configuring stub zones on each side of the trust, I verified name resolution and tested the trust again.
+
+#### Working stub zone on DC1.ad.cooklab.com
+![Working stub zone on DC1](<images/dc1-stub-zone-configured.PNG>)
+
+#### Working stub zone on DC01.corp.mikelab.com
+![Working stub zone on DC01](<images/dc01-stub-zone-configured.PNG>)
+
+## Lessons Learned
 
 I made a few mistakes along the way with this project and had to partially rebuild a couple times.
 
 First lesson: **NetBIOS names must be unique**. When I first set out to begin this project, I initially created both forests as a subdomain of `ad.`. Thus the fully qualified domain names for each were `ad.cooklab.com` and `ad.mikelab.com` and this prevented me from proceeding through the new trust wizard. My research found that the NetBIOS name of each domain or forest must be unique. With both forests being subdomains of `ad.`, both would have the NetBIOS name AD. 
 
 Second lesson: **Hostnames must be unique**. When I first promoted my domain controllers, I gave them each the hostname of `DC1`. This resulted in the error `ERROR_NO_LOGON_SERVERS` after creating the trust. My research suggested that hostname conflicts will cause issues with authentication. I changed the hostname of `DC1.corp.mikelab.com` to `DC01.corp.mikelab.com` and this resolved the error.
+
+Third lesson: **Conditional forwarders and stub zones cannot coexist**. When I went to create stub zones on both sides of the trust, I did not remove the conditional forwarders. This is a minor point, but these cannot exist together, and trying to create a stub zone for a domain that already has a conditional forwarder will fail.
 
 The issue of overlapping NetBIOS names made sense to me, but I was confused by the issue related to hostnames. I would have that that as long as the FQDN is unique, authentication could proceed. In practice this would rarely be an issue, as hosts are typically named by combination of location, service, etc. Were I do re-build this project I would probably name one host `LON-DC1.ad.cooklab.com` and the other `TO-DC1.corp.mikelab.com`
 
