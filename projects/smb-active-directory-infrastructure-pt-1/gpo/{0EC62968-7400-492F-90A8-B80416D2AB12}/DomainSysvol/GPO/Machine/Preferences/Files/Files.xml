@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Files clsid="{215B2E53-57CE-475c-80FE-9EEC14635851}"><File clsid="{50BE44C8-567A-4ed1-B1D0-9234FE1F38AF}" name="RunSconfig.ps1" status="RunSconfig.ps1" image="1" changed="2026-02-09 18:08:14" uid="{EEBB8968-FDDB-4F98-9A54-DE611B63E766}" removePolicy="1" bypassErrors="1"><Properties action="R" fromPath="\\ad.cooklab.com\Internal\IT\Shared Scripts\RunSconfig.ps1" targetPath="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\RunSconfig.ps1" readOnly="0" archive="1" hidden="0" suppress="0"/></File>
+</Files>

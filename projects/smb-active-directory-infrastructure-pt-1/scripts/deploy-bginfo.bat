@@ -1,0 +1,1 @@
+\\ad.cooklab.com\SYSVOL\ad.cooklab.com\scripts\BGInfo\Bginfo.exe \\ad.cooklab.com\SYSVOL\ad.cooklab.com\scripts\BGInfo\bginfo-config.bgi /silent /nolicprompt /timer:0

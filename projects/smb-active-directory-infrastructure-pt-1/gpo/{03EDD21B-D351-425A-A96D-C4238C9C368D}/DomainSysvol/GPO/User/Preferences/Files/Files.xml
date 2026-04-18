@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Files clsid="{215B2E53-57CE-475c-80FE-9EEC14635851}"><File clsid="{50BE44C8-567A-4ed1-B1D0-9234FE1F38AF}" name="deploy-bginfo.bat" status="deploy-bginfo.bat" image="0" changed="2026-02-02 09:23:02" uid="{27A0807B-CED7-48FC-8599-BB111E82CDC3}" bypassErrors="1"><Properties action="C" fromPath="\\ad.cooklab.com\SYSVOL\ad.cooklab.com\scripts\BGInfo\deploy-bginfo.bat" targetPath="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\deploy-bginfo.bat" readOnly="0" archive="0" hidden="0"/></File>
+</Files>

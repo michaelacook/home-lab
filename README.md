@@ -6,13 +6,25 @@ Most of the projects you will find in this collection are related to enterprise 
 
 Most of the home lab work I do is done using a Dell T7810 workstation with dual Intel Xeon E5-2699 36 core CPUs and 128 GB of ECC memory. I run Proxmox VE on this host, allowing me to easily build out networks in Cisco Modelling Labs and GNS3 and run nearly as many containers and virtual machines as I need. This isn't as expensive as it sounds. For those looking to purchase a similar machine for lab purposes, this kind of setup can be acquired for less than $1000 CAD on eBay.
 
-## Table of Contents
+## Projects
 
-Note: As I complete lab projects and convert existing projects into a format appropriate for this repo, I will update the table of contents, though I may not always list projects in alphabetic order. I will probably organize them topically or by technology as the list grows.
+Projects are organized into the following categories: AI, Automation, Compute & Virtualization, Infrastructure, Identity & Access, Microsoft 365 and Productivity, and Networking. Categories without projects are commented out until they have content.
 
-### Active Directory
-- [Configuring an Active Directory Forest Trust](<projects/active-directory-forest-trust/active-directory-forest-trust.md>)
+<!-- 
+### AI
+### Automation
+### Compute and Virtualization 
+-->
 
-### Small-medium Business Networks:
-- [OpenVPN with RADIUS Authentication](<projects/openvpn-radius-authentication/openvpn-radius-authentication.md>)
-- [OpenVPN with Radius Authentication - Split Tunneling](<projects/openvpn-radius-authentication-split-tunnel/openvpn-radius-auth-split-tunnel.md/>)
+### Infrastructure, Identity & Access
+- [Configuring an Active Directory Forest Trust](<projects/active-directory-forest-trust/active-directory-forest-trust.md>) — Cross-forest trust configuration between two Active Directory forests
+- [Office Domain: Cooklab.local](<projects/smb-active-directory-infrastructure-segmented/active-directory-infrastructure-segmented.md>) — Core SMB environment with network segmentation, Active Directory, network services, and file sharing
+- [Small-Medium Business Infrastructure: Part 1](<projects/smb-active-directory-infrastructure-pt-1/sm-active-directory-infrastructure-pt1.md>) — Active Directory domain with group policy and core services, remote access, hybrid identity, and backup and recovery (In progress)
+
+<!-- 
+### Microsoft 365 and Productivity 
+-->
+
+### Networking
+- [OpenVPN with RADIUS Authentication](<projects/openvpn-radius-authentication/openvpn-radius-authentication.md>) — VPN remote access with centralized RADIUS-based authentication
+- [OpenVPN with RADIUS Authentication – Split Tunneling](<projects/openvpn-radius-authentication-split-tunnel/openvpn-radius-auth-split-tunnel.md>) — Extends the RADIUS VPN lab with split tunneling configuration
