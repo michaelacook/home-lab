@@ -19,7 +19,7 @@ Projects are organized into the following categories: AI, Automation, Compute & 
 ### Infrastructure, Identity & Access
 - [Configuring an Active Directory Forest Trust](<projects/active-directory-forest-trust/active-directory-forest-trust.md>) — Cross-forest trust between two Active Directory forests
 - [Office Domain: Cooklab.local](<projects/smb-active-directory-infrastructure-segmented/active-directory-infrastructure-segmented.md>) — Core SMB domain with segmentation, network services, and file sharing
-- [Small-Medium Business Infrastructure: Part 1](<projects/smb-active-directory-infrastructure-pt-1/sm-active-directory-infrastructure-pt1.md>) — Active Directory domain with group policy and core services, remote access, hybrid identity, and backup and recovery (In progress)
+- [Small-Medium Business Infrastructure: Part 1](<projects/smb-active-directory-infrastructure-pt-1/sm-active-directory-infrastructure-pt1.md>) — Hybrid identity Active Directory, remote access, backup and recovery
 
 <!-- 
 ### Microsoft 365 and Productivity 
