@@ -22,7 +22,7 @@ I gave the Pfsense virtual machine two virtual CPUs, 2048 MB of RAM and 20 GB of
 
 ![Pfsense Webconfigurator Login Page](<images/pfsense-login-page.PNG>)
 
-On the first page of the configuration wizard, I gave the firewall a hostname of `cooklab-fw1` and a domain of `cooklab.internal` so that the domain doesn't interfere with Windows Server DNS. I set the primary DNS server temporarily to Cloudflare's DNS `1.1.1.1`, though this will be changed later when we add the primary and secondary domain controllers.
+On the first page of the configuration wizard, I gave the firewall a hostname of `cooklab-fw1` and a domain of `cooklab.internal` to separate the namespace of the firewall from the Active Directory domain, since the firewall will not be domain-joined. I set the primary DNS server temporarily to Cloudflare's DNS `1.1.1.1`, though this will be changed later when we add the primary and secondary domain controllers.
 
 ![Pfsense General Information](<images/pfsense-config-1.PNG>)
 
@@ -30,20 +30,20 @@ I left the default time server and set Canada/Eastern as the timezone, and then 
 
 ![Pfsense LAN Configuration](<images/pfsense-config-2.PNG>)
 
-Finally, I set a new administrator password completed the configuration wizard. I then performed an IP release and renew, then verified the web configurator can be reached at the new IP address.
+Finally, I set a new administrator password and completed the configuration wizard. I then performed an IP release and renew, then verified the web configurator can be reached at the new IP address.
 
 ![IP Release and Renew](<images/ipconfig-release-renew.PNG>)
 ![Webconfigurator at New IP](<images/webconfigurator-new-ip.PNG>)
 
-Basic firewall configuration is complete. Cooklab-fw1 is configured out of the box to do network address translation and will allow all outbound traffic, so for the moment there are no firewall rules to create.
+This completes basic firewall configuration. `Cooklab-fw1` is configured out of the box to do network address translation and will allow all outbound traffic, so for the moment there are no firewall rules to create.
 
 ![NAT Out of the Box](<images/pfsense-automatic-nat.PNG>)
 
-However, despite having connectivity out to my home LAN and the Internet, I didn't have name resolution. After some investigation I found that DNSSEC was enabled by default and this was causing name resolution failures. Because the firewall was in resolver mode, any recursive queries would ultimately fail if any recursive server in the chain failed DNSSEC. I decided instead to turn off resolver mode and enable forward mode. This means the firewall will forward all queries to the primary DNS server I configured during initial setup. Ultimately, DNS and DHCP will be configured on Windows Server and the firewall will no longer be used to hand out IP addresses or perform name resolution.
+However, despite having connectivity out to my home LAN and the Internet, I didn't have name resolution. After some investigation I found that DNSSEC was enabled by default and this was causing name resolution failures. Because the firewall was in resolver mode, any recursive queries would ultimately fail if any recursive server in the chain failed DNSSEC. I decided instead to turn off resolver mode and enable forward mode. This means the firewall will forward all queries to the primary DNS server I configured during initial setup.
 
 ## Server Configuration and Forest Creation
 
-Up until this point I have been doing the basic firewall configuration from a newly created Windows Server 2022 Datacenter Evaluation machine with 8 GB of RAM, 4 virtual CPUs and 40 GB of storage. The storage capacity would not be anywhere close to sufficient in a real-world setup, and I will probably increase the size of the disk and extend the C: volume at a later time. Because initial configuration wasn't complete, I ran all outstanding updates, ensured the timezone was correct, set a static IP of `10.0.254.2`, and a hostname of `DC1`.
+Up until this point I have been doing the basic firewall configuration from a newly created Windows Server 2022 Datacenter Evaluation machine with 8 GB of RAM, 4 virtual CPUs and 40 GB of storage. The storage capacity would not be anywhere near sufficient in a real-world setup, and I will probably increase the size of the disk and extend the C: volume at a later time. Because initial configuration wasn't complete, I ran all outstanding updates, ensured the timezone was correct, set a static IP of `10.0.254.2`, and a hostname of `DC1`.
 
 ![Basic Server Config on DC1](<images/basic-server-config-dc1.PNG>)
 
@@ -73,7 +73,9 @@ Finally, I ran the downloaded script to promote `DC2` to domain controller for `
 
 ![DC2 successfully promoted](<images/DC2-successfully-promoted.PNG>)
 
-## Creating Users, Groups and Organizational Units
+With both servers promoted to domain controller and hosting DNS for the domain, I went back to the firewall configuration and changed the DHCP options to advertise `10.0.254.2` and `10.0.254.3` for DNS.
+
+## Creating Organizational Units, Groups and Users
 
 With both domain controllers promoted I moved on to creating the organizational unit structure, along with groups and users. First I downloaded a script I had pre-written to create the organizational unit structure. Given that the script is short I will show it here, but it can also be viewed [here](<scripts/CreateCooklabOUStructure-Refactored.ps1>).
 
@@ -135,7 +137,7 @@ I also verified that changes successfully replicated to `DC2`.
 
 ![OU structure on DC2](<images/OUs-on-dc2.PNG>)
 
-I used this OU structure because it's similar to what we use in the organization where I work. The reason for separating IT from the rest of the company is to apply a special set of group policy objects to IT while standardizing the rest of the organization. However, while working on this project I came to the conclusion that this structure could be improved by moving the IT department under the Employees OU and therefore subjecting it to the same set of standard policies that affect the entire organization, and create another OU where privileged accounts and computers live, i.e., privileged users belonging to special groups and virtual machines for admin work accessed via RDP. Completely separating privileged access from day to day usage accounts is a best practice and this could be reflected in the OU structure of the domain.
+I used this OU structure because it's similar to what we use in the organization where I work. The reason for separating IT from the rest of the company is to apply a special set of group policy objects to IT while standardizing the rest of the organization.
 
 I then downloaded and ran another [script](<scripts/CreateDepartmentGroups.ps1>) I had previously written to create departmental groups for all OUs under Employees, which will serve later as a way to provide departmental file shares.
 
