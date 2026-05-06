@@ -199,4 +199,4 @@ foreach ($user in $Users) {
 
 ## Next Steps
 
-In this write-up I demonstrated initial set up of the network, basic server configuration, the creation of the Active Directory forest, and the creation of users and the domain's directory structure. In the next installment I will demonstrate the addition of an additional UPN suffix for a domain I own and update all users with the new suffix, then configure hybrid identity with Entra Cloud Connect.
+In this write-up I demonstrated initial set up of the network, basic server configuration, the creation of the Active Directory forest, and the creation of users and the domain's directory structure. In the [next article](<../smb-active-directory-infrastructure-pt-2/article.md>) I will demonstrate the addition of an additional UPN suffix for a domain I own and update all users with the new suffix, then configure hybrid identity with Entra Cloud Connect.
