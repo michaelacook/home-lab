@@ -1,10 +1,10 @@
-This repository centralizes my scripts and infrastructure home lab projects for reference and as a record of my progress as an IT professional. I maintain an extensive Obsidian collection of technical notes, and hope to use this repository as an extension of my note collection but tailored specifically to act as a showcase for the project work I found most challenging and gratifying. I also hope that these projects will serve as inspiration for other early-career IT pros to get their hands dirty. If you replicate one of my projects yourself, I would love to hear about your work!
+# Home Lab Portfolio
 
-Most of the projects you will find in this collection are related to enterprise networking and server role deployments. However, in the future I hope to share some work related to self-hosting.
+This repository documents my home lab infrastructure projects, covering enterprise networking, server role deployments, and cloud integration. It serves as both a technical reference and a showcase of my hands-on work as an IT professional.
 
-## Lab Equipment
+## Equipment
 
-Most of the home lab work I do is done using a Dell T7810 workstation with dual Intel Xeon E5-2699 36 core CPUs and 128 GB of ECC memory. I run Proxmox VE on this host, allowing me to easily build out networks in Cisco Modelling Labs and GNS3 and run nearly as many containers and virtual machines as I need. This isn't as expensive as it sounds. For those looking to purchase a similar machine for lab purposes, this kind of setup can be acquired for less than $1000 CAD on eBay.
+Most of the home lab work I do is done using a Dell T7810 workstation with dual Intel Xeon E5-2699 36 core CPUs and 128 GB of ECC memory. I run Proxmox VE 9 on this host, allowing me to easily build out networks in Cisco Modelling Labs and GNS3 and run as many containers and virtual machines as I need. For those looking to create a similar lab environment, a refurbished Dell or HP workstation with similar specifications can be obtained on eBay for 700 - 1000 CAD.
 
 ## Projects
 
