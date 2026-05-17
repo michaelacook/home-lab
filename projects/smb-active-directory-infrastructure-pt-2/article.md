@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In the [previous article](<../smb-active-directory-infrastructure-pt-1/article.md>) I detailed the initial setup of the network, servers and directory structure of this project. In this article I am going to walk the reader through the addition of a custom UPN suffix and the configuration of hybrid identity using Azure Cloud Connect.
+In the [previous article](<../smb-active-directory-infrastructure-pt-1/article.md>) I detailed the initial setup of the network, servers and directory structure of this project. In this article I am going to walk the reader through the addition of a custom UPN suffix and the configuration of hybrid identity using Azure Entra Connect Sync.
 
 ## Adding a New UPN Suffix
 
@@ -38,7 +38,7 @@ Users can still authenticate with the domain using their first UPN suffix; but h
 
 With UPN suffixes in place, I proceeded with creating a new server instance to run Microsoft Entra Connect Sync. Entra Connect Sync can be run on a domain controller, but Microsoft recommends installing it on a separate member server instead. I created a new virtual machine and gave it a hostname of `LON-DIRSYNC` and a static IP of `10.0.254.4`. I then logged into my Azure tenant and downloaded the Entra Connect setup executable.
 
-Installation and configuration is fairly straight-forward and involves providing credentials for a Global Administrator in your target Entra ID tenant, Enterprise Admin credentials for your domain, and verifying the source and target domain and UPN suffix security principals will use. For this lab accepting default configuration options was sufficient.
+Installation and configuration is fairly straight-forward and involves providing credentials for a Global Administrator in your target Entra ID tenant, Enterprise Admin credentials for your domain, and verifying the source and target domain and UPN suffix security principals will use. For this lab I accepted the default configuration options, which includes configuring Password Hash Sync (PHS) as the authentication method for hybrid identity. PHS synchronizes a hash of each user's password from Active Directory to Entra ID, which eliminates the need for a user to first authenticate against a domain controller before accessing a cloud application. PHS is simpler to implement and offers greater convenience for hybrid and remote employees, so for this reason Microsoft recommends it as default, especially for small and medium-sized companies.
 
 ![Entra Connect Sync Installation 1](<images/entra-connect-install-1.PNG>)
 ![Entra Connect Sync Installation 2](<images/entra-connect-install-2.PNG>)
@@ -46,10 +46,12 @@ Installation and configuration is fairly straight-forward and involves providing
 ![Entra Connect Sync Installation 4](<images/entra-connect-install-4.PNG>)
 ![Entra Connect Sync Installation 5](<images/entra-connect-install-5.PNG>)
 
-Finally, I verified that the sync was successful using the Sychronization Service Manager and in the Azure portal.
+Finally, I verified that the sync was successful using the Synchronization Service Manager and in the Azure portal.
 
-![Sychronization Service Manager successful sync](<images/synchronization-service-manager-success.PNG>)
+![Synchronization Service Manager successful sync](<images/synchronization-service-manager-success.PNG>)
 ![Users synced to Entra ID](<images/users-synced.PNG>)
 ![Groups synced to Entra ID](<images/groups-synced.PNG>)
 
 ## Next Steps
+
+In this article, I gave an overview of the addition of a UPN suffix for an external domain, the configuration of that UPN suffix for security principals, and the configuration of hybrid identity with Azure Entra Connect Sync. In the next installment article I will detail basic environment hardening and standardization using Group Policy.
